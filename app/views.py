@@ -1,6 +1,6 @@
 from django.views.generic import View
 from django.shortcuts import render,redirect
-from .models import Work, Skill
+from .models import Work, Skill, Post
 from .forms import ContactForm
 from django.conf import settings
 from django.core.mail import BadHeaderError, EmailMessage
@@ -16,10 +16,12 @@ class IndexView(View):
     def get(self, request, *args, **kwargs):
         skill_data = Skill.objects.all()
         work_data = Work.objects.order_by("-id")
+        post_data = Post.objects.all()
         form = ContactForm(request.POST or None)
         return render(request, 'app/index.html',{
             "skill_data": skill_data, 
             'work_data': work_data,
+            'post_data': post_data,
             'form': form
         })
         
